@@ -21,10 +21,12 @@
    [7. API Calling - async actions using redux-thunk](#7-api-calling---async-actions-using-redux-thunk)
 
    [8. React-redux counter example](#8-react-redux-counter-example)
+   
+   [8.1 counter example using callback function](#8.1-counter-example-using-callback-function)
 
    [9. API calling in react-redux](#9-api-calling-in-react-redux)
 
-2. Redux-toolkit
+3. Redux-toolkit
 
    [10. Redux-Toolkit Counter App](#10-redux-toolkit-counter-app)
 
@@ -34,7 +36,7 @@
 
    [13. RTK: CRUD Ecommerce APP](#13-rtk-query--a-complete-crud-app)
 
-3. Redux-toolkit + Typescript
+4. Redux-toolkit + Typescript
 
     [14. Redux-toolkit + Typescript CRUD APP](#14-redux-toolkit--typescript-crud-app)
 
@@ -530,6 +532,55 @@
   ```
 
 ## 8. React-redux counter example
+### 8.1 counter example using callback function
+
+```jsx
+// App.jsx
+import Counter from "./components/Counter";
+import { useState } from "react";
+import "./App.css";
+
+function App() {
+  const [parentCount, setParentCount] = useState(0);
+  // callback function to update parent count
+  const updateParentCount = (newCount) => {
+    setParentCount(newCount);
+  };
+  return (
+    <>
+      <h1>Welcome to react redux</h1>
+      <h3>Parent Counter: {parentCount}</h3>
+      <Counter updateParentCount={updateParentCount} />
+    </>
+  );
+}
+
+export default App;
+```
+
+```jax
+// Counter.jsx
+import { useState } from "react";
+
+function Counter({ updateParentCount }) {
+  const [count, setCount] = useState(0);
+  const handleSetCounter = () => {
+    const newCount = (prev) => prev + 1;
+    setCount(newCount);
+    updateParentCount(newCount);
+  };
+  return (
+    <div>
+      <h2>Counter App</h2>
+      <h3>Count: {count}</h3>
+      <button onClick={handleSetCounter}>Increment</button>
+    </div>
+  );
+}
+
+export default Counter;
+
+```
 
 - install redux and react-redux package
 - we will make a counter app; first we will build with state and then we will do this with react-redux. example
